@@ -387,6 +387,42 @@
           </div>
         </div>
 
+        <!-- FinOps Cloud Waste & Architecture Cost Radar -->
+        <div class="card card-finops-radar">
+          <div class="card-header">
+            <div class="finops-head-title">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="6" x2="12" y2="18"/></svg>
+              <div>
+                <h3>FinOps Cloud Waste & Architecture Cost Radar</h3>
+                <span class="subtext">Financial efficiency, unattached cloud storage, and single-AZ expenditure leaks</span>
+              </div>
+            </div>
+            <div class="finops-head-badges">
+              <span class="badge-finops-grade" id="finopsEfficiencyGrade">Efficiency: 86%</span>
+            </div>
+          </div>
+          <div class="finops-summary-grid">
+            <div class="finops-kpi-card">
+              <span class="finops-kpi-label">Est. Monthly Cloud Spend</span>
+              <span class="finops-kpi-val" id="finopsMonthlySpend">$14,850</span>
+              <span class="finops-kpi-sub">Across active inventory</span>
+            </div>
+            <div class="finops-kpi-card finops-waste-card">
+              <span class="finops-kpi-label">Identified Monthly Waste</span>
+              <span class="finops-kpi-val text-danger" id="finopsMonthlyWaste">$2,410</span>
+              <span class="finops-kpi-sub">Idle compute & egress traps</span>
+            </div>
+            <div class="finops-kpi-card finops-roi-card">
+              <span class="finops-kpi-label">"Save & Secure" ROI</span>
+              <span class="finops-kpi-val text-success" id="finopsSaveRoi">+$1,450/mo</span>
+              <span class="finops-kpi-sub">Potential savings from fixes</span>
+            </div>
+          </div>
+          <div class="finops-waste-breakdown" id="finopsWasteList">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
         <!-- Azure & Multi-Cloud Services Status Inventory -->
         <div class="card card-service-inventory">
           <div class="card-header">
@@ -660,11 +696,36 @@ resource eventSubscription 'Microsoft.EventGrid/eventSubscriptions@2022-06-15' =
             Interactive service dependency topology. Vulnerable components with expiring keys or single points of failure (SPOF) pulse in crimson/orange. Click any node to inspect blast radius, latency chain, and architectural remedy.
           </p>
         </div>
-        <div class="topology-legend">
-          <span class="legend-item"><span class="legend-dot dot-critical"></span> Critical / SPOF</span>
-          <span class="legend-item"><span class="legend-dot dot-warning"></span> Warning / Expiring Secret</span>
-          <span class="legend-item"><span class="legend-dot dot-healthy"></span> Resilient / Hardened</span>
+        <div class="topology-header-actions">
+          <div class="topology-view-controls">
+            <button class="top-mode-btn active" id="btnModeDependency">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              Service Mesh
+            </button>
+            <button class="top-mode-btn" id="btnModeAttackPath">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Chained Attack Paths
+              <span class="attack-chain-badge" id="attackChainBadge">0 Vectors</span>
+            </button>
+          </div>
+          <div class="topology-legend" id="topologyLegend">
+            <span class="legend-item"><span class="legend-dot dot-critical"></span> Critical / SPOF</span>
+            <span class="legend-item"><span class="legend-dot dot-warning"></span> Warning / Expiring Secret</span>
+            <span class="legend-item"><span class="legend-dot dot-healthy"></span> Resilient / Hardened</span>
+          </div>
         </div>
+      </div>
+
+      <!-- Keystone Exploit Remediation Banner -->
+      <div class="keystone-banner" id="keystoneBanner" style="display:none;">
+        <div class="keystone-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="keystone-content">
+          <div class="keystone-title">Critical Exploit Vector: <span id="keystoneChainDesc">Public Edge ➔ Workload Identity ➔ Database Ingress</span></div>
+          <div class="keystone-sub">Remediating Keystone Node <strong id="keystoneNodeName">Azure Front Door & WAF</strong> neutralizes all downstream lateral exploit routes.</div>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btnRemediateKeystone">✨ Generate Hardened IaC Fix</button>
       </div>
 
       <div class="topology-layout">
@@ -1207,6 +1268,59 @@ resource eventSubscription 'Microsoft.EventGrid/eventSubscriptions@2022-06-15' =
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="btnCancelNotifications">Cancel</button>
         <button type="button" class="btn btn-primary" id="btnSaveNotifications">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SELF-HEALING IAC CODE GENERATOR -->
+  <div class="modal-backdrop" id="modalIacFix">
+    <div class="modal-dialog modal-dialog-lg">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <div>
+            <h3>Self-Healing IaC Remediation Engine</h3>
+            <span class="modal-subtitle" id="iacRemediationFindingTitle">Automated Hardened Code Synthesis</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="btnCloseIacModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="iac-meta-bar">
+          <span class="badge-provider-tag" id="iacCloudProviderTag">AZURE</span>
+          <span class="iac-rule-tag" id="iacRuleTag">CIS Benchmark v8 • Zero Trust Hardening</span>
+          <span class="iac-roi-chip" id="iacRoiChip">Save $120/mo + Boost WAF</span>
+        </div>
+
+        <div class="iac-format-tabs">
+          <button class="iac-tab-btn active" data-iac-format="terraform">Terraform / OpenTofu (.tf)</button>
+          <button class="iac-tab-btn" data-iac-format="bicep">Azure Bicep (.bicep)</button>
+          <button class="iac-tab-btn" data-iac-format="cloudformation">AWS CloudFormation (.yaml)</button>
+        </div>
+
+        <div class="iac-diff-container">
+          <div class="iac-diff-header">
+            <span class="diff-tag diff-tag-remove">(-) Insecure Existing Declarations</span>
+            <span class="diff-tag diff-tag-add">(+) Hardened Self-Healing Remediation</span>
+          </div>
+          <div class="iac-code-wrapper">
+            <pre class="iac-pre"><code id="iacCodeDisplay" class="font-mono"></code></pre>
+          </div>
+        </div>
+
+        <div class="iac-explanation-box" id="iacExplanationBox">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnDownloadIacPatch">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download .patch
+        </button>
+        <button type="button" class="btn btn-primary" id="btnCopyIacCode">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy Hardened Code
+        </button>
       </div>
     </div>
   </div>
