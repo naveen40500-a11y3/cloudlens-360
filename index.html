@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudLens 360° | Enterprise Multi-Cloud Governance Platform</title>
+  <meta name="description" content="Enterprise-grade architectural health, key expiration, Azure service diagnostics, and future-proof remediation platform designed by a 30-year veteran enterprise architect.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Top Executive Notification Bar -->
+  <header class="app-header">
+    <div class="header-branding">
+      <div class="logo-shield">
+        <svg viewBox="0 0 24 24" class="logo-icon" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
+          <path d="M12 8v5l3 3"/>
+        </svg>
+        <span class="pulse-indicator"></span>
+      </div>
+      <div>
+        <div class="brand-title-wrap">
+          <h1 class="brand-title">CloudLens 360°</h1>
+          <span class="badge-architect">Enterprise Edition</span>
+        </div>
+        <p class="brand-tagline">Multi-Cloud Architecture Health • Key Expiration Sentinel • CIS Benchmark Governance</p>
+      </div>
+    </div>
+
+    <!-- Quick Vital Counters -->
+    <div class="header-vitals">
+      <div class="vital-chip vital-critical" id="vitalCriticalKeyChip" title="Critical Keys/Certs expiring < 7 days">
+        <div class="chip-dot"></div>
+        <span class="chip-val" id="headerCriticalKeyCount">0</span>
+        <span class="chip-lbl">Expiring Keys</span>
+      </div>
+      <div class="vital-chip vital-high" id="vitalIssuesChip">
+        <div class="chip-dot"></div>
+        <span class="chip-val" id="headerHighIssuesCount">0</span>
+        <span class="chip-lbl">Arch Risks</span>
+      </div>
+      <div class="vital-chip vital-score" id="vitalScoreChip">
+        <span class="score-ring-val" id="headerHealthScore">100%</span>
+        <span class="chip-lbl">Health Score</span>
+      </div>
+    </div>
+
+    <!-- Executive Action Bar -->
+    <div class="header-actions">
+      <!-- Compliance Framework Selector -->
+      <div class="compliance-frame-wrap" title="Active Compliance Framework">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <select id="complianceFrameworkSelect" class="compliance-frame-select">
+          <option value="waf">WAF (Well-Architected)</option>
+          <option value="cis">CIS Benchmark v8</option>
+          <option value="nist">NIST 800-53 Rev 5</option>
+          <option value="soc2">SOC 2 Type II</option>
+          <option value="pci">PCI-DSS v4.0</option>
+          <option value="iso27001">ISO 27001:2022</option>
+        </select>
+      </div>
+
+      <!-- Command Palette trigger -->
+      <button class="btn btn-ghost btn-icon-only" id="btnOpenCommandPalette" title="Command Palette (Ctrl+K)">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span class="kbd-hint">⌘K</span>
+      </button>
+
+      <!-- Notification Settings -->
+      <button class="btn btn-ghost btn-icon-only" id="btnOpenNotifications" title="Alert Thresholds & Notifications">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-dot" id="notifAlertDot"></span>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button class="btn btn-ghost btn-icon-only" id="btnThemeToggle" title="Toggle Light / Dark Theme">
+        <svg id="themeIconDark" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="themeIconLight" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+
+      <button class="btn btn-primary" id="btnExportExecutiveReport">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Executive Audit Dossier
+      </button>
+    </div>
+  </header>
+
+  <!-- Cloud Provider Filter Ribbon -->
+  <section class="cloud-provider-ribbon">
+    <div class="provider-pills-wrap">
+      <span class="provider-pills-label">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        Cloud Scope:
+      </span>
+      <button class="provider-pill-btn active" data-cloud-filter="all" id="filterCloudAll">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span>Multi-Cloud (Global)</span>
+        <span class="provider-count" id="countCloudAll">0</span>
+      </button>
+      <button class="provider-pill-btn" data-cloud-filter="azure" id="filterCloudAzure">
+        <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="M9.8 1.5 5.5 10.2l-3.3-4.8L0 13.5h7.2l2.3-5.2 2.7 5.2H16L9.8 1.5z"/></svg>
+        <span>Microsoft Azure</span>
+        <span class="provider-count" id="countCloudAzure">0</span>
+      </button>
+      <button class="provider-pill-btn" data-cloud-filter="aws" id="filterCloudAws">
+        <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="M7.7 10.4c-.9 0-1.7-.2-2.3-.5-.6-.4-.9-.9-.9-1.6 0-.8.4-1.4 1.1-1.8.7-.4 1.7-.6 3-.6.5 0 1 .1 1.4.1v-.4c0-.5-.1-.9-.4-1.1-.3-.2-.7-.3-1.3-.3-.4 0-.8.1-1.2.2-.4.1-.7.3-1 .5l-.5-.9c.4-.3.9-.5 1.4-.7.6-.1 1.2-.2 1.7-.2 1.1 0 1.9.3 2.4.8.5.5.8 1.3.8 2.3v3.4h-1.2v-.8c-.4.3-.8.5-1.3.7-.5.2-1.1.2-1.7.2zm.4-1c.6 0 1.1-.1 1.5-.4.4-.3.6-.7.6-1.1v-.5c-.4 0-.8-.1-1.2-.1-.9 0-1.5.1-1.9.4-.4.3-.6.6-.6 1.1 0 .4.1.7.4.9.3.2.7.3 1.2.3z"/></svg>
+        <span>Amazon Web Services (AWS)</span>
+        <span class="provider-count" id="countCloudAws">0</span>
+      </button>
+      <button class="provider-pill-btn" data-cloud-filter="gcp" id="filterCloudGcp">
+        <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="M8 0a8 8 0 1 0 8 8A8 8 0 0 0 8 0zm3.8 8.9H8V7.1h6.2a6.3 6.3 0 0 1 .1 1.3 6.6 6.6 0 0 1-2.5 5.2A6.5 6.5 0 0 1 8 14.6 6.6 6.6 0 0 1 1.4 8 6.6 6.6 0 0 1 8 1.4a6.4 6.4 0 0 1 4.5 1.8l-1.8 1.8A3.9 3.9 0 0 0 8 3.9a4.1 4.1 0 0 0-4.1 4.1 4.1 4.1 0 0 0 4.1 4.1c2.4 0 3.7-1.4 4.1-2.4l-.3-.8z"/></svg>
+        <span>Google Cloud (GCP)</span>
+        <span class="provider-count" id="countCloudGcp">0</span>
+      </button>
+    </div>
+    <div class="framework-badge" id="activeFrameworkBadge">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4.5v9L12 22l-8-4.5v-9L12 2z"/></svg>
+      <span id="activeFrameworkName">Tri-Cloud Well-Architected Framework Benchmarks</span>
+    </div>
+  </section>
+
+  <!-- Active Workspace & Environment Control Ribbon -->
+  <section class="scenario-ribbon">
+    <div class="scenario-selector-group">
+      <label for="workspaceNameInput" class="scenario-label">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Environment:
+      </label>
+      <input type="text" id="workspaceNameInput" class="scenario-dropdown" style="min-width:300px; max-width:420px;" value="Enterprise Multi-Cloud Production" title="Click to rename active environment">
+    </div>
+
+    <div class="quick-audit-actions">
+      <button class="btn btn-sm btn-outline" id="btnRunDiagnostics">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Run Security Audit
+      </button>
+      <button class="btn btn-sm btn-secondary" id="btnOpenImportModal">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Import Inventory / IaC
+      </button>
+      <button class="btn btn-sm btn-secondary" id="btnExportWorkspaceJson">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Export Audit JSON
+      </button>
+      <button class="btn btn-sm btn-ghost" id="btnClearWorkspace" title="Clear active inventory to start a fresh audit">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        Clear
+      </button>
+    </div>
+  </section>
+
+  <!-- Live Application URL & Azure Endpoint Diagnostic Bar -->
+  <section class="endpoint-discovery-ribbon">
+    <div class="endpoint-discovery-wrap">
+      <div class="endpoint-icon-col">
+        <div class="endpoint-radar-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <div class="endpoint-lbl-wrap">
+          <span class="endpoint-lbl-title">Endpoint & Service Auditor</span>
+          <span class="endpoint-lbl-sub">Live App URL & Cloud Discovery</span>
+        </div>
+      </div>
+
+      <div class="endpoint-input-col">
+        <div class="endpoint-input-box">
+          <svg class="endpoint-input-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+          <input type="url" id="appUrlAuditInput" class="endpoint-text-input" 
+                 placeholder="Enter live Application URL or Azure Endpoint (e.g. https://app.azurewebsites.net or https://api.company.com)..." 
+                 value="" autocomplete="off" spellcheck="false">
+          <button class="endpoint-clear-btn" id="btnClearAppUrl" title="Clear input">&times;</button>
+        </div>
+      </div>
+
+      <div class="endpoint-presets-col">
+        <select id="endpointPresetSelect" class="endpoint-preset-dropdown" title="Select cloud architecture target">
+          <option value="" disabled selected>Target Architecture Presets ▾</option>
+          <option value="https://portal.azure.com">Azure Portal & Front Door (portal.azure.com)</option>
+          <option value="https://payments-api.azurewebsites.net">Azure App Service PaaS (*.azurewebsites.net)</option>
+          <option value="https://edge-gateway.azurefd.net">Azure Front Door & Global WAF (*.azurefd.net)</option>
+          <option value="https://sec-vault-prod.vault.azure.net">Azure Key Vault HSM (*.vault.azure.net)</option>
+          <option value="https://api-gateway.azure-api.net">Azure API Management APIM (*.azure-api.net)</option>
+          <option value="https://aws.amazon.com">AWS CloudFront & Global Edge (aws.amazon.com)</option>
+          <option value="https://cloud.google.com">Google Cloud Platform Edge (cloud.google.com)</option>
+          <option value="https://github.com">Enterprise GitHub Ingress (github.com)</option>
+        </select>
+      </div>
+
+      <div class="endpoint-action-col">
+        <button class="btn btn-primary btn-audit-endpoint" id="btnAnalyzeAppUrl">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <span>Analyze Endpoint Health</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Navigation Tabs -->
+  <nav class="app-nav-tabs">
+    <button class="nav-tab active" data-tab="tab-overview">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Architecture Overview
+    </button>
+    <button class="nav-tab" data-tab="tab-key-sentinel">
+      <span class="tab-badge-alert" id="tabKeyAlertBadge">0</span>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+      Key & Secret Sentinel
+    </button>
+    <button class="nav-tab" data-tab="tab-issues">
+      <span class="tab-badge-count" id="tabIssuesCountBadge">0</span>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Risk & Remediation Matrix
+    </button>
+    <button class="nav-tab" data-tab="tab-topology">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Service Topology & Blast Radius
+    </button>
+    <button class="nav-tab" data-tab="tab-custom-scan">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      OmniScan IaC & Secrets
+    </button>
+    <button class="nav-tab" data-tab="tab-roadmap">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Strategic Modernization Roadmap
+    </button>
+    <button class="nav-tab" data-tab="tab-audit-history">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="12 5 12 12 16 14"/><circle cx="12" cy="12" r="10"/></svg>
+      Audit History
+    </button>
+  </nav>
+
+  <!-- Main View Container -->
+  <main class="main-container">
+    <!-- TAB 1: ARCHITECTURE OVERVIEW -->
+    <section class="tab-pane active" id="tab-overview">
+      <div class="overview-grid">
+        <!-- Main Score Hero Card -->
+        <div class="card card-score-hero">
+          <div class="card-header">
+            <h3>Enterprise Architecture Health Index</h3>
+            <span class="badge-status badge-healthy" id="healthBadgeStatus">Operational Baseline</span>
+          </div>
+          <div class="score-hero-body">
+            <div class="gauge-container">
+              <svg viewBox="0 0 120 120" class="gauge-svg">
+                <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+                <circle class="gauge-val" id="gaugeCircle" cx="60" cy="60" r="50" stroke-dasharray="314.15" stroke-dashoffset="0"/>
+              </svg>
+              <div class="gauge-text-wrap">
+                <span class="gauge-number" id="gaugeNumber">100</span>
+                <span class="gauge-total">/100</span>
+                <span class="gauge-subtitle">Health Index</span>
+              </div>
+            </div>
+
+            <div class="score-breakdown-list">
+              <div class="score-item" data-pillar="security">
+                <div class="score-item-head">
+                  <span class="score-item-title"><span class="dot dot-security"></span>Security & Identity (Zero Trust)</span>
+                  <span class="score-item-score" id="scoreSecurity">100%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill fill-security" id="barSecurity" style="width: 100%"></div></div>
+              </div>
+
+              <div class="score-item" data-pillar="reliability">
+                <div class="score-item-head">
+                  <span class="score-item-title"><span class="dot dot-reliability"></span>Reliability & Resilience (HA/DR)</span>
+                  <span class="score-item-score" id="scoreReliability">100%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill fill-reliability" id="barReliability" style="width: 100%"></div></div>
+              </div>
+
+              <div class="score-item" data-pillar="performance">
+                <div class="score-item-head">
+                  <span class="score-item-title"><span class="dot dot-performance"></span>Performance & Scalability</span>
+                  <span class="score-item-score" id="scorePerformance">100%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill fill-performance" id="barPerformance" style="width: 100%"></div></div>
+              </div>
+
+              <div class="score-item" data-pillar="cost">
+                <div class="score-item-head">
+                  <span class="score-item-title"><span class="dot dot-cost"></span>Cost Optimization (FinOps)</span>
+                  <span class="score-item-score" id="scoreCost">100%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill fill-cost" id="barCost" style="width: 100%"></div></div>
+              </div>
+
+              <div class="score-item" data-pillar="operations">
+                <div class="score-item-head">
+                  <span class="score-item-title"><span class="dot dot-operations"></span>Operational Excellence & Observability</span>
+                  <span class="score-item-score" id="scoreOps">100%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill fill-operations" id="barOps" style="width: 100%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer-alert" id="scoreHeroAdvice">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <div>
+              <strong>Executive Risk Assessment:</strong>
+              <span id="verdictText">Workspace active. Ready to evaluate live application endpoints, monitor cryptographic key lifecycles, and audit multi-cloud IaC configurations.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Expiry Early-Warning Radar Mini-Card -->
+        <div class="card card-key-radar">
+          <div class="card-header">
+            <h3>Secret & Key Countdown Radar</h3>
+            <button class="link-btn" id="linkToKeyTab">View All Secrets →</button>
+          </div>
+          <div class="key-summary-grid">
+            <div class="key-kpi-box kpi-critical">
+              <span class="kpi-num" id="kpiCriticalKeys">0</span>
+              <span class="kpi-txt">Critical (&lt; 7 Days)</span>
+              <span class="kpi-sub">Imminent Outage Risk</span>
+            </div>
+            <div class="key-kpi-box kpi-warning">
+              <span class="kpi-num" id="kpiWarningKeys">0</span>
+              <span class="kpi-txt">Warning (&lt; 30 Days)</span>
+              <span class="kpi-sub">Action Next Sprint</span>
+            </div>
+            <div class="key-kpi-box kpi-healthy">
+              <span class="kpi-num" id="kpiHealthyKeys">0</span>
+              <span class="kpi-txt">Rotated / Managed</span>
+              <span class="kpi-sub">Managed Identity / Safe</span>
+            </div>
+          </div>
+
+          <div class="imminent-keys-preview">
+            <h4 class="subhead">Urgent Expiration Feed:</h4>
+            <div class="imminent-keys-list" id="imminentKeysMiniList">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div class="key-auto-action">
+            <button class="btn btn-sm btn-outline w-100" id="btnQuickAddSecret">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Track New Key / Certificate
+            </button>
+          </div>
+        </div>
+
+        <!-- Asset Inventory & Compliance Adherence -->
+        <div class="card card-financial-impact">
+          <div class="card-header">
+            <h3>Asset Inventory & Compliance Adherence</h3>
+            <span class="badge-finops">Live Telemetry</span>
+          </div>
+          <div class="fin-stats-grid">
+            <div class="fin-stat-card">
+              <span class="fin-label">Audited Cloud Services</span>
+              <span class="fin-val text-info" id="totalResourcesCount">0</span>
+              <span class="fin-note">Active services in inventory</span>
+            </div>
+            <div class="fin-stat-card">
+              <span class="fin-label">Tracked Cryptographic Keys</span>
+              <span class="fin-val text-warning" id="totalKeysCount">0</span>
+              <span class="fin-note">IAM, KMS & App Secrets</span>
+            </div>
+            <div class="fin-stat-card">
+              <span class="fin-label">Open Critical & High Risks</span>
+              <span class="fin-val text-danger" id="totalOpenRisksCount">0</span>
+              <span class="fin-note">Unmitigated architectural debts</span>
+            </div>
+            <div class="fin-stat-card">
+              <span class="fin-label">CIS & WAF Compliance Rate</span>
+              <span class="fin-val text-success" id="complianceRatePercent">100%</span>
+              <span class="fin-note">Controls passed across providers</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Azure & Multi-Cloud Services Status Inventory -->
+        <div class="card card-service-inventory">
+          <div class="card-header">
+            <h3>Azure & Cloud Services Diagnostic Inventory</h3>
+            <span class="badge-service-count" id="serviceCountBadge">0 Services Evaluated</span>
+          </div>
+          <div class="service-chip-list" id="serviceChipList">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Core Architectural Controls & Security Guardrails -->
+        <div class="card card-axioms-enforcement">
+          <div class="card-header">
+            <div class="axioms-header-title">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div>
+                <h3>Core Architectural Controls & Security Guardrails</h3>
+                <span class="subtext">Automated compliance verification across active multi-cloud inventory and secrets</span>
+              </div>
+            </div>
+            <div class="axioms-header-actions">
+              <span class="badge-status" id="axiomsComplianceBadge">Evaluating...</span>
+            </div>
+          </div>
+
+          <div class="axioms-grid">
+            <!-- Control 1 -->
+            <div class="axiom-card" id="axiomCard1">
+              <div class="axiom-card-header">
+                <div class="axiom-num">SEC-01</div>
+                <span class="axiom-badge-state" id="axiomBadge1">EVALUATING</span>
+              </div>
+              <h4 class="axiom-title">Eliminate Static Secrets with Managed Identities</h4>
+              <p class="axiom-desc">Zero credentials in application configs. Migrate from Entra ID client secrets and storage keys to System/User-Assigned Managed Identity and Workload Identity (OIDC).</p>
+              <div class="axiom-evidence" id="axiomEvidence1">
+                <strong>Current State:</strong> Evaluating active credentials...
+              </div>
+              <div class="axiom-actions">
+                <button class="btn btn-xs btn-outline" id="btnMigrateManagedIdentity">View Remediation Playbook</button>
+              </div>
+            </div>
+
+            <!-- Control 2 -->
+            <div class="axiom-card" id="axiomCard2">
+              <div class="axiom-card-header">
+                <div class="axiom-num">REL-01</div>
+                <span class="axiom-badge-state" id="axiomBadge2">EVALUATING</span>
+              </div>
+              <h4 class="axiom-title">Asynchronous Decoupling Over Synchronous RPC</h4>
+              <p class="axiom-desc">Buffer peak bursts and protect database connection pool threads by implementing the Transactional Outbox Pattern with cloud messaging queues.</p>
+              <div class="axiom-evidence" id="axiomEvidence2">
+                <strong>Current State:</strong> Evaluating messaging topology...
+              </div>
+              <div class="axiom-actions">
+                <button class="btn btn-xs btn-outline" id="btnDeployQueueDecoupling">View Remediation Playbook</button>
+              </div>
+            </div>
+
+            <!-- Control 3 -->
+            <div class="axiom-card" id="axiomCard3">
+              <div class="axiom-card-header">
+                <div class="axiom-num">NET-01</div>
+                <span class="axiom-badge-state" id="axiomBadge3">EVALUATING</span>
+              </div>
+              <h4 class="axiom-title">Zero Trust & Private Link Network Isolation</h4>
+              <p class="axiom-desc">Perimeter lockdown. Disable public network access on all Key Vaults, databases, and Storage Accounts; route all traffic over private VPC/VNet endpoints.</p>
+              <div class="axiom-evidence" id="axiomEvidence3">
+                <strong>Current State:</strong> Evaluating network ingress...
+              </div>
+              <div class="axiom-actions">
+                <button class="btn btn-xs btn-outline" id="btnLockdownPrivateEndpoints">View Remediation Playbook</button>
+              </div>
+            </div>
+
+            <!-- Control 4 -->
+            <div class="axiom-card" id="axiomCard4">
+              <div class="axiom-card-header">
+                <div class="axiom-num">GOV-01</div>
+                <span class="axiom-badge-state" id="axiomBadge4">EVALUATING</span>
+              </div>
+              <h4 class="axiom-title">Automated Event-Driven Expiry Governance</h4>
+              <p class="axiom-desc">Continuous lifecycle automation. Wire Key Vault and IAM NearExpiry events to event grid triggers and automated rotation runbooks 30 days prior to expiry.</p>
+              <div class="axiom-evidence" id="axiomEvidence4">
+                <strong>Current State:</strong> Evaluating lifecycle policies...
+              </div>
+              <div class="axiom-actions">
+                <button class="btn btn-xs btn-outline" id="btnDeployEventGridAlarms">View Remediation Playbook</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: AUDIT HISTORY & CHANGE LOG -->
+    <section class="tab-pane" id="tab-audit-history">
+      <div class="section-hero">
+        <div class="hero-left">
+          <h2>Audit History & Governance Change Log</h2>
+          <p>Immutable chronological log of all workspace state changes, remediation actions, imports, and key rotations. Acts as an enterprise-grade audit trail for SOC 2 and ISO 27001 compliance evidence.</p>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-sm btn-outline" id="btnExportAuditLog">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Export Log (CSV)
+          </button>
+          <button class="btn btn-sm btn-ghost" id="btnClearAuditLog" title="Clear audit log history">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Clear Log
+          </button>
+        </div>
+      </div>
+      <div class="table-container">
+        <div id="auditHistoryTimeline" class="audit-timeline">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: KEY & SECRET EXPIRY SENTINEL -->
+    <section class="tab-pane" id="tab-key-sentinel">
+      <div class="section-hero">
+        <div class="hero-left">
+          <h2>Key, Secret & Certificate Lifecycle Command Center</h2>
+          <p>
+            Automated multi-cloud cryptographic inventory and early-warning sentinel. Continuously monitors secret lifecycles, expiration horizons, and blast-radius exposure across Azure, AWS, and GCP environments.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="btnAddNewSecretModal">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Track New Key/Cert
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters & Sorting -->
+      <div class="table-controls">
+        <div class="search-input-wrap">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="filterKeySearch" placeholder="Search by name, Azure service, or vault...">
+        </div>
+        <div class="filter-chips">
+          <button class="filter-chip active" data-key-filter="all">All (<span id="keyFilterAllCount">0</span>)</button>
+          <button class="filter-chip chip-crit" data-key-filter="critical">Critical &lt; 7 Days (<span id="keyFilterCritCount">0</span>)</button>
+          <button class="filter-chip chip-warn" data-key-filter="warning">Warning &lt; 30 Days (<span id="keyFilterWarnCount">0</span>)</button>
+          <button class="filter-chip chip-safe" data-key-filter="safe">Managed &gt; 90 Days (<span id="keyFilterSafeCount">0</span>)</button>
+        </div>
+        <button class="btn btn-sm btn-outline" id="btnExportKeysCsv" style="margin-left:auto;">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Export CSV
+        </button>
+      </div>
+
+      <!-- Key Table -->
+      <div class="table-container">
+        <table class="sentinel-table" id="keysTable">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Cloud Provider</th>
+              <th>Secret / Key / Cert Name</th>
+              <th>Service & Location</th>
+              <th>Type & Storage</th>
+              <th>Expiration Date</th>
+              <th>Days Left</th>
+              <th>Blast Radius & Business Impact</th>
+              <th>Remediation Playbook</th>
+            </tr>
+          </thead>
+          <tbody id="keysTableBody">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Architecture Reference Blueprint Accordion -->
+      <div class="blueprint-card">
+        <div class="blueprint-header">
+          <div class="blueprint-title">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            <h3>Architecture Reference Blueprint: Zero-Trust Automated Secret Rotation</h3>
+          </div>
+          <span class="badge-accent">Enterprise Standard</span>
+        </div>
+        <div class="blueprint-content">
+          <div class="blueprint-columns">
+            <div class="blueprint-col">
+              <h4>1. Core Architecture Principles</h4>
+              <ul>
+                <li><strong>Phase 1: Transition to Cloud Managed Identities</strong> — Completely deprecate client secrets in favor of System-Assigned and User-Assigned Managed Identities or AWS IRSA / GCP Workload Identity Federation. Eliminates credentials from app configs entirely.</li>
+                <li><strong>Phase 2: Event-Driven Lifecycle Triggers</strong> — When a certificate or secret reaches 30 days before expiration, dispatch an automated event notification to a serverless automation runbook.</li>
+                <li><strong>Phase 3: Automated Certificate Authority Integration</strong> — Integrate Key Vault / Secrets Manager with certified CAs for automatic zero-downtime certificate renewal and deployment.</li>
+              </ul>
+            </div>
+            <div class="blueprint-col">
+              <h4>2. Infrastructure-as-Code Automation Recipe</h4>
+              <div class="code-box-header">
+                <span>keyvault-autorotation.bicep</span>
+                <button class="copy-btn" id="btnCopyBicep">Copy Template</button>
+              </div>
+              <pre class="code-snippet"><code id="bicepSnippet">// Cloud Infrastructure: Automated Expiration Event Subscription
+resource eventSubscription 'Microsoft.EventGrid/eventSubscriptions@2022-06-15' = {
+  name: 'evsub-keyvault-nearexpiry'
+  scope: keyVault
+  properties: {
+    destination: {
+      endpointType: 'AzureFunction'
+      properties: {
+        resourceId: autoRotateFunction.id
+        maxEventsPerBatch: 1
+      }
+    }
+    filter: {
+      includedEventTypes: [
+        'Microsoft.KeyVault.SecretNearExpiry',
+        'Microsoft.KeyVault.CertificateNearExpiry'
+      ]
+    }
+  }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: RISK & REMEDIATION MATRIX -->
+    <section class="tab-pane" id="tab-issues">
+      <div class="section-hero">
+        <div class="hero-left">
+          <h2>Architectural Findings & Risk Remediation Matrix</h2>
+          <p>
+            Evaluated across Well-Architected Framework pillars and CIS Benchmarks. Each finding provides <strong>Root Cause Analysis</strong>, <strong>Immediate Mitigation</strong>, and <strong>Target Architecture Redesign</strong>.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <div class="filter-group">
+            <select id="filterPillarSelect" class="styled-select">
+              <option value="all">All WAF Pillars</option>
+              <option value="security">Security & Identity</option>
+              <option value="reliability">Reliability & Resilience</option>
+              <option value="performance">Performance & Scalability</option>
+              <option value="cost">Cost Optimization</option>
+              <option value="operations">Operational Excellence</option>
+            </select>
+            <select id="filterSeveritySelect" class="styled-select">
+              <option value="all">All Severities</option>
+              <option value="CRITICAL">Critical</option>
+              <option value="HIGH">High</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="LOW">Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Issues List Container -->
+      <div class="issues-matrix-container" id="issuesListContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 4: SERVICE TOPOLOGY & BLAST RADIUS -->
+    <section class="tab-pane" id="tab-topology">
+      <div class="section-hero">
+        <div class="hero-left">
+          <h2>Architecture Service Mesh & Outage Blast-Radius Visualizer</h2>
+          <p>
+            Interactive service dependency topology. Vulnerable components with expiring keys or single points of failure (SPOF) pulse in crimson/orange. Click any node to inspect blast radius, latency chain, and architectural remedy.
+          </p>
+        </div>
+        <div class="topology-legend">
+          <span class="legend-item"><span class="legend-dot dot-critical"></span> Critical / SPOF</span>
+          <span class="legend-item"><span class="legend-dot dot-warning"></span> Warning / Expiring Secret</span>
+          <span class="legend-item"><span class="legend-dot dot-healthy"></span> Resilient / Hardened</span>
+        </div>
+      </div>
+
+      <div class="topology-layout">
+        <div class="canvas-wrap">
+          <canvas id="topologyCanvas" width="900" height="540"></canvas>
+          <div class="canvas-overlay-hints">
+            <span>Click any service node to inspect deep diagnostic properties</span>
+          </div>
+        </div>
+
+        <div class="topology-sidebar" id="nodeDetailsSidebar">
+          <div class="sidebar-header">
+            <h3 id="sidebarNodeTitle">Resource Inspector</h3>
+            <span class="badge-status badge-neutral" id="sidebarNodeStatus">No Selection</span>
+          </div>
+          <div class="sidebar-body" id="sidebarNodeBody">
+            <div class="node-meta">
+              <div class="meta-row"><strong>Service Type:</strong> <span id="nodeMetaType">—</span></div>
+              <div class="meta-row"><strong>Resource ID:</strong> <span id="nodeMetaId">—</span></div>
+              <div class="meta-row"><strong>Availability SLA:</strong> <span id="nodeMetaSla">99.99%</span></div>
+              <div class="meta-row"><strong>Security Status:</strong> <span id="nodeMetaSec">—</span></div>
+            </div>
+
+            <div class="node-issues-box">
+              <h4>Identified Vulnerabilities on this Node:</h4>
+              <ul id="nodeIssuesList">
+                <li>Click any node on the topology canvas to inspect architectural telemetry and findings.</li>
+              </ul>
+            </div>
+
+            <div class="node-remedy-box">
+              <h4>Remediation Guidance:</h4>
+              <p id="nodeRemedyText">
+                Select an active infrastructure node to view automated remediation runbooks and architectural hardening guidelines.
+              </p>
+              <button class="btn btn-sm btn-accent mt-2" id="btnFixSelectedNode" style="display:none;">Mark Node Hardened & Remediated</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: OMNISCAN IAC & SECRETS -->
+    <section class="tab-pane" id="tab-custom-scan">
+      <div class="section-hero">
+        <div class="hero-left">
+          <h2>OmniScan Multi-Cloud Diagnostic Engine</h2>
+          <p>
+            Analyze multi-cloud IaC configurations (Terraform, Bicep, ARM, CloudFormation) or evaluate live certificates and secret age against 60+ CIS Benchmarks, cloud security standards, and Well-Architected controls.
+          </p>
+        </div>
+      </div>
+
+      <div class="custom-scanner-grid">
+        <div class="scanner-input-card">
+          <div class="tab-headers-sub">
+            <button class="sub-tab active" data-scanner-mode="iac">IaC / Config (Terraform, Bicep, ARM, CFN)</button>
+            <button class="sub-tab" data-scanner-mode="cert">Live Domain & SSL Expiry Checker</button>
+            <button class="sub-tab" data-scanner-mode="secret">IAM & KMS Key Evaluator</button>
+          </div>
+
+          <!-- Mode 1: IaC Scan -->
+          <div class="scanner-mode-panel active" id="mode-iac">
+            <div class="code-area-header">
+              <span>Paste Multi-Cloud Config (Terraform AWS/GCP, Bicep, ARM, CloudFormation)</span>
+              <div style="display:flex; gap:0.4rem;">
+                <button class="btn btn-xs btn-outline" id="btnLoadSampleAzureIaC">Sample Azure Bicep</button>
+                <button class="btn btn-xs btn-outline" id="btnLoadSampleAwsIaC">Sample AWS Terraform</button>
+                <button class="btn btn-xs btn-outline" id="btnLoadSampleGcpIaC">Sample GCP Terraform</button>
+              </div>
+            </div>
+            <textarea id="iacInputText" class="code-editor-textarea" placeholder="Paste your Azure Bicep/ARM, AWS Terraform/CloudFormation, or GCP Terraform code here..."></textarea>
+            <div class="scan-button-row">
+              <button class="btn btn-primary" id="btnRunCustomIacScan">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Run Multi-Cloud Security Deep-Scan
+              </button>
+              <button class="btn btn-accent" id="btnIngestScanFindings" style="display:none;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Ingest Scanned Findings into Workspace
+              </button>
+              <span class="scan-note">Evaluates 60+ CIS benchmarks across Azure, AWS, and GCP client-side.</span>
+            </div>
+          </div>
+
+          <!-- Mode 2: Live Cert Domain Checker -->
+          <div class="scanner-mode-panel" id="mode-cert">
+            <div class="input-form-group">
+              <label for="domainCheckInput">Target Application Domain / Hostname:</label>
+              <input type="text" id="domainCheckInput" class="form-input" placeholder="e.g. api.your-company.com or app.azurewebsites.net" value="">
+            </div>
+            <div class="input-form-group">
+              <label for="certIssueDate">Certificate Issue Date:</label>
+              <input type="date" id="certIssueDate" class="form-input" value="">
+            </div>
+            <div class="input-form-group">
+              <label for="certExpiryDate">Certificate Expiry Date:</label>
+              <input type="date" id="certExpiryDate" class="form-input" value="">
+            </div>
+            <button class="btn btn-primary" id="btnRunCertCheck">
+              Evaluate Certificate Expiry Risk & SLA Blast Radius
+            </button>
+          </div>
+
+          <!-- Mode 3: Secret Evaluator -->
+          <div class="scanner-mode-panel" id="mode-secret">
+            <div class="input-form-group">
+              <label for="secretNameInput">Credential Name / Identifier:</label>
+              <input type="text" id="secretNameInput" class="form-input" placeholder="e.g. entra-spn-client-secret or keyvault-cmk" value="">
+            </div>
+            <div class="input-form-group">
+              <label for="secretTypeSelect">Secret Type:</label>
+              <select id="secretTypeSelect" class="form-input">
+                <option value="Azure AD Client Secret">Azure Entra ID (App Registration) Client Secret</option>
+                <option value="Key Vault Secret">Azure Key Vault Secret (Connection String / Pass)</option>
+                <option value="Storage SAS Token">Azure Storage Shared Access Signature (SAS)</option>
+                <option value="Cosmos DB Master Key">Cosmos DB Primary Master Key</option>
+                <option value="Public SSL Certificate">External / Third-Party SSL Certificate</option>
+              </select>
+            </div>
+            <div class="input-form-group">
+              <label for="secretExpiryDate">Expiry Date:</label>
+              <input type="date" id="secretExpiryDate" class="form-input" value="">
+            </div>
+            <button class="btn btn-primary" id="btnEvaluateSecretInput">
+              Audit Secret Lifecycle & Generate Zero-Downtime Rotation Plan
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Scan Results Output -->
+        <div class="scanner-results-card">
+          <div class="card-header">
+            <h3>Diagnostic Scan Output</h3>
+            <span class="badge-status badge-neutral" id="scanResultsBadge">Ready to Scan</span>
+          </div>
+          <div class="scan-results-body" id="scanResultsBody">
+            <div class="empty-state">
+              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <h4>No Active Custom Scan</h4>
+              <p>Select a mode on the left and run diagnostics to receive an instantaneous deep architectural audit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: STRATEGIC MODERNIZATION ROADMAP -->
+    <section class="tab-pane" id="tab-roadmap">
+      <div class="section-hero">
+        <div class="hero-left">
+          <h2>30-60-90 Day Strategic Modernization Roadmap</h2>
+          <p>
+            Enterprise architectural roadmap structured for executive stakeholders (CIO, CTO, CISO). Systematically prioritizes remediation actions to eliminate technical debt, institute automated governance, and establish zero-trust infrastructure.
+          </p>
+        </div>
+      </div>
+
+      <div class="roadmap-phases-grid">
+        <!-- Phase 1: Days 1-30 -->
+        <div class="roadmap-card">
+          <div class="roadmap-badge phase-1">Days 1 - 30</div>
+          <h3>Immediate Triage & Outage Prevention</h3>
+          <p class="phase-subtitle">Eliminate Catastrophic Key & Single-Point Failures</p>
+          <ul class="roadmap-checklist">
+            <li>
+              <strong>Emergency Secret Rotation:</strong> Rotate expiring client secrets, AWS IAM access keys, and SSL certificates using zero-downtime dual-credential swapping.
+            </li>
+            <li>
+              <strong>Automate Expiration Telemetry:</strong> Deploy event notifications to alert on credentials expiring in &lt; 30 days via MS Teams, Slack, & PagerDuty.
+            </li>
+            <li>
+              <strong>Enforce Minimum TLS 1.2 / 1.3:</strong> Deprecate TLS 1.0 and 1.1 across all load balancers, CDN distributions, and storage accounts.
+            </li>
+            <li>
+              <strong>Private Endpoints Lockdown:</strong> Disable public internet ingress for Key Vaults, databases, and object stores; enforce Private Link via VPC/VNet.
+            </li>
+          </ul>
+          <div class="phase-metric">
+            <span>Projected Health Gain:</span>
+            <strong>+24% (48% → 72%)</strong>
+          </div>
+        </div>
+
+        <!-- Phase 2: Days 31-60 -->
+        <div class="roadmap-card">
+          <div class="roadmap-badge phase-2">Days 31 - 60</div>
+          <h3>Architectural Resilience & Zero-Trust Hardening</h3>
+          <p class="phase-subtitle">Decouple, Automate, & High-Availability Mesh</p>
+          <ul class="roadmap-checklist">
+            <li>
+              <strong>Managed Identities Everywhere:</strong> Completely eradicate hardcoded connection strings; migrate workloads to Managed Identity, AWS IRSA, or GCP Workload Identity.
+            </li>
+            <li>
+              <strong>Multi-Region Active-Passive Failover:</strong> Configure multi-region automatic failover with bounded staleness and geo-replication for core databases.
+            </li>
+            <li>
+              <strong>Message Queue Decoupling:</strong> Implement asynchronous transactional outbox pattern to decouple API ingestion from database writes.
+            </li>
+            <li>
+              <strong>FinOps Governance:</strong> Terminate unattached storage volumes and right-size over-provisioned throughput to recapture unnecessary cloud spend.
+            </li>
+          </ul>
+          <div class="phase-metric">
+            <span>Projected Health Gain:</span>
+            <strong>+16% (72% → 88%)</strong>
+          </div>
+        </div>
+
+        <!-- Phase 3: Days 61-90+ -->
+        <div class="roadmap-card">
+          <div class="roadmap-badge phase-3">Days 61 - 90+</div>
+          <h3>Autonomous Governance & AI/Cloud-Native Future-Proofing</h3>
+          <p class="phase-subtitle">Continuous Policy as Code & Chaos Resilience</p>
+          <ul class="roadmap-checklist">
+            <li>
+              <strong>Policy as Code Guardrails:</strong> Enforce continuous compliance via Terraform/Bicep CI/CD pipelines. Automatically block resources deployed without encryption or private endpoints.
+            </li>
+            <li>
+              <strong>Chaos Engineering & DR Drills:</strong> Institute quarterly automated drills testing zone failure and credential revocation scenarios.
+            </li>
+            <li>
+              <strong>Distributed Tracing & AIOps:</strong> Standardize on OpenTelemetry across multi-cloud clusters with dynamic anomaly detection.
+            </li>
+            <li>
+              <strong>Secure AI Workload Readiness:</strong> Isolate generative AI inference endpoints behind private endpoints and zero-trust IAM boundaries.
+            </li>
+          </ul>
+          <div class="phase-metric">
+            <span>Projected Health Gain:</span>
+            <strong>+10% (88% → 98%)</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: DETAILED ENDPOINT HEALTH & AZURE SERVICE ANALYSIS REPORT -->
+  <div class="modal-backdrop" id="modalEndpointReport">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-header-icon-box">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Live Endpoint Health, DNS Routing & Cloud Architecture Dossier</h3>
+            <div class="modal-subtitle" id="endpointReportTargetUrl">Target: Live Endpoint Analysis</div>
+          </div>
+        </div>
+        <div class="header-actions-modal">
+          <button class="btn btn-sm btn-outline" id="btnPrintEndpointReport">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print Dossier
+          </button>
+          <button class="modal-close-btn" id="btnCloseEndpointReport">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body" id="endpointReportBody">
+        <!-- Rendered dynamically by app-main.js -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnCloseEndpointFooter">Close</button>
+        <button type="button" class="btn btn-primary" id="btnIngestEndpointToWorkspace">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Ingest Discovered Architecture & Keys into Workspace
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EXECUTIVE REPORT PREVIEW & PRINT -->
+  <div class="modal-backdrop" id="modalExecutiveReport">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <h3>Executive Architecture Audit & Remediation Dossier</h3>
+        </div>
+        <div class="header-actions-modal">
+          <button class="btn btn-sm btn-primary" id="btnPrintReport">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print / Save as PDF
+          </button>
+          <button class="modal-close-btn" id="btnCloseReport">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body" id="printableReportContent">
+        <!-- Rendered dynamically for executive review -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / TRACK NEW KEY -->
+  <div class="modal-backdrop" id="modalAddKey">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          <h3>Track New Key, Secret or Certificate</h3>
+        </div>
+        <button class="modal-close-btn" id="btnCloseAddKey">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="formAddKey">
+          <div class="input-form-group">
+            <label for="newKeyName">Name / Resource Description:</label>
+            <input type="text" id="newKeyName" class="form-input" required placeholder="e.g. aws-iam-access-key-billing">
+          </div>
+          <div class="input-form-group">
+            <label for="newKeyProvider">Cloud Provider:</label>
+            <select id="newKeyProvider" class="form-input">
+              <option value="azure">Microsoft Azure</option>
+              <option value="aws">Amazon Web Services (AWS)</option>
+              <option value="gcp">Google Cloud Platform (GCP)</option>
+              <option value="hybrid">Multi-Cloud / Hybrid</option>
+            </select>
+          </div>
+          <div class="input-form-group">
+            <label for="newKeyService">Associated Cloud Service:</label>
+            <input type="text" id="newKeyService" class="form-input" required placeholder="e.g. AWS IAM / S3 / CloudFront">
+          </div>
+          <div class="input-form-group">
+            <label for="newKeyType">Secret / Credential Type:</label>
+            <select id="newKeyType" class="form-input">
+              <optgroup label="Azure">
+                <option value="Entra ID Client Secret">Entra ID Client Secret</option>
+                <option value="Key Vault Secret">Azure Key Vault Secret</option>
+                <option value="Storage SAS Token">Azure Storage SAS Token</option>
+                <option value="Cosmos Master Key">Cosmos DB Master Key</option>
+              </optgroup>
+              <optgroup label="AWS">
+                <option value="AWS IAM Access Key">AWS IAM Access Key (AKIA...)</option>
+                <option value="AWS KMS CMK">AWS KMS Customer Managed Key</option>
+                <option value="AWS Secrets Manager Secret">AWS Secrets Manager Secret</option>
+                <option value="ACM SSL Certificate">AWS ACM Public Certificate</option>
+              </optgroup>
+              <optgroup label="GCP">
+                <option value="GCP Service Account JSON">GCP Service Account JSON Key</option>
+                <option value="GCP Cloud KMS Key">GCP Cloud KMS CryptoKey</option>
+                <option value="GCP Certificate Manager Cert">GCP Certificate Manager SSL</option>
+              </optgroup>
+              <optgroup label="Universal">
+                <option value="SSL/TLS Certificate">SSL/TLS Public Certificate</option>
+                <option value="API Gateway Key">API Gateway Access Key</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="input-form-group">
+            <label for="newKeyExpiry">Expiry Date:</label>
+            <input type="date" id="newKeyExpiry" class="form-input" required>
+          </div>
+          <div class="input-form-group">
+            <label for="newKeyImpact">Business Outage Impact:</label>
+            <input type="text" id="newKeyImpact" class="form-input" required placeholder="e.g. Immediate payment processing downtime">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="btnCancelAddKey">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add to Sentinel Monitoring</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: IMPORT INVENTORY / IAC / BENCHMARK -->
+  <div class="modal-backdrop" id="modalImport">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <h3>Import Infrastructure Assets & Secret Inventory</h3>
+        </div>
+        <button class="modal-close-btn" id="btnCloseImportModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:1rem;">
+          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:0.75rem;">
+            Ingest live infrastructure configuration, exported audit files, or pre-configured CIS benchmark reference profiles directly into your active workspace.
+          </p>
+          <div style="display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-outline" id="btnLoadReferenceAudit">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4.5v9L12 22l-8-4.5v-9L12 2z"/></svg>
+              Load Multi-Cloud CIS Baseline
+            </button>
+            <button class="btn btn-sm btn-outline" id="btnLoadAzureBaseline">
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="M9.8 1.5 5.5 10.2l-3.3-4.8L0 13.5h7.2l2.3-5.2 2.7 5.2H16L9.8 1.5z"/></svg>
+              Load Azure Baseline
+            </button>
+            <button class="btn btn-sm btn-outline" id="btnLoadAwsBaseline">
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="M7.7 10.4c-.9 0-1.7-.2-2.3-.5-.6-.4-.9-.9-.9-1.6 0-.8.4-1.4 1.1-1.8.7-.4 1.7-.6 3-.6.5 0 1 .1 1.4.1v-.4c0-.5-.1-.9-.4-1.1-.3-.2-.7-.3-1.3-.3-.4 0-.8.1-1.2.2-.4.1-.7.3-1 .5l-.5-.9c.4-.3.9-.5 1.4-.7.6-.1 1.2-.2 1.7-.2 1.1 0 1.9.3 2.4.8.5.5.8 1.3.8 2.3v3.4h-1.2v-.8c-.4.3-.8.5-1.3.7-.5.2-1.1.2-1.7.2zm.4-1c.6 0 1.1-.1 1.5-.4.4-.3.6-.7.6-1.1v-.5c-.4 0-.8-.1-1.2-.1-.9 0-1.5.1-1.9.4-.4.3-.6.6-.6 1.1 0 .4.1.7.4.9.3.2.7.3 1.2.3z"/></svg>
+              Load AWS Baseline
+            </button>
+            <label class="btn btn-sm btn-outline" style="cursor:pointer; margin-bottom:0;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload .json File
+              <input type="file" id="importFileInput" accept=".json" style="display:none;">
+            </label>
+          </div>
+        </div>
+        <div class="input-form-group">
+          <label for="importJsonTextarea">Or Paste Workspace JSON / Asset Inventory:</label>
+          <textarea id="importJsonTextarea" class="code-editor-textarea" style="height:200px;" placeholder='Paste JSON exported from CloudLens or custom inventory format:
+{
+  "name": "Production Environment",
+  "resources": [ {"id": "res-1", "name": "EKS Cluster", "provider": "aws", "type": "Compute", "status": "healthy"} ],
+  "keys": [ {"id": "k-1", "name": "aws-iam-key", "provider": "aws", "service": "IAM", "type": "AWS IAM Access Key", "expiryDate": "2026-10-15"} ]
+}'></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnCancelImport">Cancel</button>
+        <button type="button" class="btn btn-primary" id="btnConfirmImport">Import into Workspace</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: UPDATE EXPIRY / ROTATE KEY -->
+  <div class="modal-backdrop" id="modalUpdateExpiry">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <h3>Record Key Rotation / Update Expiry</h3>
+        </div>
+        <button class="modal-close-btn" id="btnCloseUpdateExpiry">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;" id="updateExpiryTargetName">
+          Update the recorded expiration horizon after executing rotation in your cloud provider console or CLI.
+        </p>
+        <input type="hidden" id="updateExpiryKeyId">
+        <div class="input-form-group">
+          <label for="newExpiryInputDate">New Expiration Date:</label>
+          <input type="date" id="newExpiryInputDate" class="form-input" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnCancelUpdateExpiry">Cancel</button>
+        <button type="button" class="btn btn-primary" id="btnSaveUpdatedExpiry">Save & Re-evaluate Health</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- MODAL: COMMAND PALETTE -->
+  <div class="cmd-palette-backdrop" id="cmdPaletteBackdrop">
+    <div class="cmd-palette-dialog">
+      <div class="cmd-palette-search">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="cmdPaletteInput" class="cmd-palette-input" placeholder="Search resources, keys, findings, actions..." autocomplete="off" spellcheck="false">
+        <span class="cmd-palette-esc" id="btnCloseCmdPalette">ESC</span>
+      </div>
+      <div id="cmdPaletteResults" class="cmd-palette-results">
+        <!-- Dynamically populated -->
+      </div>
+      <div class="cmd-palette-footer">
+        <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+        <span><kbd>↵</kbd> Select</span>
+        <span><kbd>ESC</kbd> Close</span>
+        <span class="cmd-palette-scope" id="cmdPaletteScope">All Entities</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: NOTIFICATION SETTINGS -->
+  <div class="modal-backdrop" id="modalNotifications">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <h3>Alert Thresholds & Notification Settings</h3>
+        </div>
+        <button class="modal-close-btn" id="btnCloseNotifications">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1.25rem;">Configure operational alert thresholds. These settings persist to localStorage and govern the urgency indicators across the dashboard.</p>
+
+        <div class="notif-settings-grid">
+          <div class="notif-setting-row">
+            <div>
+              <div class="notif-setting-label">Critical Expiry Threshold (days)</div>
+              <div class="notif-setting-sub">Keys/certs with fewer days than this are marked CRITICAL</div>
+            </div>
+            <input type="number" id="notifCritDays" class="form-input notif-input" value="7" min="1" max="30">
+          </div>
+          <div class="notif-setting-row">
+            <div>
+              <div class="notif-setting-label">Warning Expiry Threshold (days)</div>
+              <div class="notif-setting-sub">Keys/certs in this range are flagged WARNING</div>
+            </div>
+            <input type="number" id="notifWarnDays" class="form-input notif-input" value="30" min="7" max="90">
+          </div>
+          <div class="notif-setting-row">
+            <div>
+              <div class="notif-setting-label">Remediation SLA: Critical Findings (days)</div>
+              <div class="notif-setting-sub">Number of days to resolve a CRITICAL security finding</div>
+            </div>
+            <input type="number" id="notifSlaCritDays" class="form-input notif-input" value="3" min="1" max="14">
+          </div>
+          <div class="notif-setting-row">
+            <div>
+              <div class="notif-setting-label">Remediation SLA: High Findings (days)</div>
+              <div class="notif-setting-sub">Number of days to resolve a HIGH security finding</div>
+            </div>
+            <input type="number" id="notifSlaHighDays" class="form-input notif-input" value="7" min="1" max="30">
+          </div>
+          <div class="notif-setting-row">
+            <div>
+              <div class="notif-setting-label">Show Browser Notifications</div>
+              <div class="notif-setting-sub">Desktop alerts for critical expiry events (requires permission)</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="notifBrowserToggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="notif-setting-row">
+            <div>
+              <div class="notif-setting-label">Active Compliance Framework</div>
+              <div class="notif-setting-sub">Framework governs scoring weights and control language</div>
+            </div>
+            <select id="notifFrameworkSelect" class="form-input notif-input">
+              <option value="waf">WAF (Well-Architected)</option>
+              <option value="cis">CIS Benchmark v8</option>
+              <option value="nist">NIST 800-53 Rev 5</option>
+              <option value="soc2">SOC 2 Type II</option>
+              <option value="pci">PCI-DSS v4.0</option>
+              <option value="iso27001">ISO 27001:2022</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnCancelNotifications">Cancel</button>
+        <button type="button" class="btn btn-primary" id="btnSaveNotifications">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app-main.js?v=6.0"></script>
+</body>
+</html>
