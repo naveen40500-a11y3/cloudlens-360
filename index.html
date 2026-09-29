@@ -391,8 +391,14 @@
         <div class="card card-finops-radar">
           <div class="card-header">
             <div class="finops-head-title">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="6" x2="12" y2="18"/></svg>
-              <div>
+              <div class="finops-icon-box">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
+                  <line x1="12" y1="6" x2="12" y2="18"/>
+                </svg>
+              </div>
+              <div class="finops-title-text">
                 <h3>FinOps Cloud Waste & Architecture Cost Radar</h3>
                 <span class="subtext">Financial efficiency, unattached cloud storage, and single-AZ expenditure leaks</span>
               </div>
@@ -401,25 +407,27 @@
               <span class="badge-finops-grade" id="finopsEfficiencyGrade">Efficiency: 86%</span>
             </div>
           </div>
-          <div class="finops-summary-grid">
-            <div class="finops-kpi-card">
-              <span class="finops-kpi-label">Est. Monthly Cloud Spend</span>
-              <span class="finops-kpi-val" id="finopsMonthlySpend">$14,850</span>
-              <span class="finops-kpi-sub">Across active inventory</span>
+          <div class="card-body">
+            <div class="finops-summary-grid">
+              <div class="finops-kpi-card">
+                <span class="finops-kpi-label">Est. Monthly Cloud Spend</span>
+                <span class="finops-kpi-val" id="finopsMonthlySpend">$14,850</span>
+                <span class="finops-kpi-sub">Across active inventory</span>
+              </div>
+              <div class="finops-kpi-card finops-waste-card">
+                <span class="finops-kpi-label">Identified Monthly Waste</span>
+                <span class="finops-kpi-val text-danger" id="finopsMonthlyWaste">$2,410</span>
+                <span class="finops-kpi-sub">Idle compute & egress traps</span>
+              </div>
+              <div class="finops-kpi-card finops-roi-card">
+                <span class="finops-kpi-label">"Save & Secure" ROI</span>
+                <span class="finops-kpi-val text-success" id="finopsSaveRoi">+$1,450/mo</span>
+                <span class="finops-kpi-sub">Potential savings from fixes</span>
+              </div>
             </div>
-            <div class="finops-kpi-card finops-waste-card">
-              <span class="finops-kpi-label">Identified Monthly Waste</span>
-              <span class="finops-kpi-val text-danger" id="finopsMonthlyWaste">$2,410</span>
-              <span class="finops-kpi-sub">Idle compute & egress traps</span>
+            <div class="finops-waste-breakdown" id="finopsWasteList">
+              <!-- Populated dynamically -->
             </div>
-            <div class="finops-kpi-card finops-roi-card">
-              <span class="finops-kpi-label">"Save & Secure" ROI</span>
-              <span class="finops-kpi-val text-success" id="finopsSaveRoi">+$1,450/mo</span>
-              <span class="finops-kpi-sub">Potential savings from fixes</span>
-            </div>
-          </div>
-          <div class="finops-waste-breakdown" id="finopsWasteList">
-            <!-- Populated dynamically -->
           </div>
         </div>
 
